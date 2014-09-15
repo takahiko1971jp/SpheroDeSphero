@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest">
+<Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:wb="http://schemas.microsoft.com/appx/2013/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest">
 
   <Identity Name="32b44207-3ee0-432e-965f-85b995947889"
-            Publisher="CN=Admin"
+            Publisher="CN=takahiko1971jp"
             Version="1.0.0.0" />
 
   <Properties>
@@ -37,5 +37,10 @@
   </Applications>
   <Capabilities>
     <Capability Name="internetClient" />
+    <wb:DeviceCapability Name="bluetooth.rfcomm">
+      <wb:Device Id="any">
+        <wb:Function Type="serviceId:00001101-0000-1000-8000-00805F9B34FB" />
+      </wb:Device>
+    </wb:DeviceCapability>
   </Capabilities>
 </Package>
