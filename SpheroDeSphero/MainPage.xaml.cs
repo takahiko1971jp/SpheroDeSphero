@@ -33,10 +33,10 @@ namespace SpheroDeSphero
 
         private void tsConnectController_Toggled(object sender, RoutedEventArgs e)
         {
-            if(tsConnectController.IsOn)
+            RobotProvider provider = RobotProvider.GetSharedProvider();
+            if (tsConnectController.IsOn)
             {
                 tblController.Text = "接続中...";
-                RobotProvider provider = RobotProvider.GetSharedProvider();
                 provider.DiscoveredRobotEvent += OnControllerDiscovered;
                 provider.NoRobotsEvent += OnNoControllerEvent;
                 provider.ConnectedRobotEvent += OnControllerConnected;
@@ -45,7 +45,11 @@ namespace SpheroDeSphero
             else
             {
                 tblController.Text = "切断中...";
-
+                provider.DiscoveredRobotEvent -= OnTargetDiscovered;
+                provider.NoRobotsEvent -= OnNoTargetEvent;
+                provider.ConnectedRobotEvent -= OnTargetConnected;
+                if (m_controller != null) m_controller.Disconnect();
+                tblController.Text = "切断しました。";
             }
         }
 
@@ -69,18 +73,22 @@ namespace SpheroDeSphero
             tsConnectController.IsOn = true;
             tblController.Text = "接続しました。";
 
-            m_controller.SetRGBLED(0, 255, 0);
-            m_controller.SensorControl.Hz = 10;
-            m_controller.SensorControl.AccelerometerUpdatedEvent += OnAccelerometerUpdated;
+            if (m_controller != null)
+            {
+                m_controller.SetRGBLED(0, 255, 0);
+                m_controller.SetHeading(0);
+                if (m_controller.SensorControl != null)
+                {
+                    m_controller.SensorControl.Hz = 10;
+                    m_controller.SensorControl.AccelerometerUpdatedEvent += OnAccelerometerUpdated;
+                }
+            }
         }
 
         private void OnAccelerometerUpdated(object sender, AccelerometerReading reading)
         {
-            //AccelerometerX.Text = "" + reading.X;
-            //AccelerometerY.Text = "" + reading.Y;
-            //AccelerometerZ.Text = "" + reading.Z;
-            float dx = (-100.0F * reading.X);
-            float dy = (100.0F * reading.Y);
+            float dx = 100.0F * reading.X;
+            float dy = 100.0F * reading.Y;
             double radian = Math.Atan2(dx, dy);
             int kakudo = (int)(radian * 180.0D / Math.PI);
             if (kakudo < 0) kakudo = 360 + kakudo;
@@ -95,7 +103,7 @@ namespace SpheroDeSphero
 
         private void btnController_Click(object sender, RoutedEventArgs e)
         {
-            if (m_controller != null)
+            if (m_controller != null && m_controller.SensorControl != null)
             {
                 m_controller.SensorControl.StopAll();
                 m_controller.Sleep();
@@ -105,15 +113,17 @@ namespace SpheroDeSphero
                 provider.DiscoveredRobotEvent -= OnControllerDiscovered;
                 provider.NoRobotsEvent -= OnNoControllerEvent;
                 provider.ConnectedRobotEvent -= OnControllerConnected;
+                tsConnectController.IsOn = false;
+                tblController.Text = "電源オフしました。";
             }
         }
 
         private void tsConnectTarget_Toggled(object sender, RoutedEventArgs e)
         {
-            if (tsConnectController.IsOn)
+            RobotProvider provider = RobotProvider.GetSharedProvider();
+            if (tsConnectTarget.IsOn)
             {
                 tblTarget.Text = "接続中...";
-                RobotProvider provider = RobotProvider.GetSharedProvider();
                 provider.DiscoveredRobotEvent += OnTargetDiscovered;
                 provider.NoRobotsEvent += OnNoTargetEvent;
                 provider.ConnectedRobotEvent += OnTargetConnected;
@@ -122,7 +132,11 @@ namespace SpheroDeSphero
             else
             {
                 tblTarget.Text = "切断中...";
-
+                provider.DiscoveredRobotEvent -= OnTargetDiscovered;
+                provider.NoRobotsEvent -= OnNoTargetEvent;
+                provider.ConnectedRobotEvent -= OnTargetConnected;
+                if (m_target != null) m_target.Disconnect();
+                tblTarget.Text = "切断しました。";
             }
         }
 
@@ -145,12 +159,12 @@ namespace SpheroDeSphero
         {
             tsConnectTarget.IsOn = true;
             tblTarget.Text = "接続しました。";
-            m_controller.SetRGBLED(255, 255, 255);
+            m_target.SetRGBLED(255, 255, 255);
         }
 
         private void btnTarget_Click(object sender, RoutedEventArgs e)
         {
-            if (m_target != null)
+            if (m_target != null && m_target.SensorControl != null)
             {
                 m_target.SensorControl.StopAll();
                 m_target.Sleep();
@@ -159,6 +173,8 @@ namespace SpheroDeSphero
                 provider.DiscoveredRobotEvent -= OnTargetDiscovered;
                 provider.NoRobotsEvent -= OnNoTargetEvent;
                 provider.ConnectedRobotEvent -= OnTargetConnected;
+                tsConnectTarget.IsOn = false;
+                tblTarget.Text = "電源オフしました。";
             }
         }
 

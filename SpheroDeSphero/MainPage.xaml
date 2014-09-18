@@ -14,8 +14,8 @@
         <TextBox x:Name="txtTarget" HorizontalAlignment="Left" Margin="376,287,0,0" TextWrapping="Wrap" Text="Sphero-WRP" VerticalAlignment="Top" FontSize="20" Width="150"/>
         <Button x:Name="btnController" Content="電源オフ" HorizontalAlignment="Left" Margin="730,102,0,0" VerticalAlignment="Top" FontSize="20" Click="btnController_Click"/>
         <Button x:Name="btnTarget" Content="電源オフ" HorizontalAlignment="Left" Margin="730,284,0,0" VerticalAlignment="Top" FontSize="20" Click="btnTarget_Click"/>
-        <TextBlock x:Name="tblController" HorizontalAlignment="Left" Margin="140,164,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="20" Width="543" Text="状態:　"/>
-        <TextBlock x:Name="tblTarget" HorizontalAlignment="Left" Margin="140,350,0,0" TextWrapping="Wrap" Text="状態:　" VerticalAlignment="Top" FontSize="20" Width="543"/>
+        <TextBlock x:Name="tblController" HorizontalAlignment="Left" Margin="140,164,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="20" Width="543" Text="【状態】"/>
+        <TextBlock x:Name="tblTarget" HorizontalAlignment="Left" Margin="140,350,0,0" TextWrapping="Wrap" Text="【状態】" VerticalAlignment="Top" FontSize="20" Width="543"/>
         <Image x:Name="imgCalibrateController" HorizontalAlignment="Left" Height="100" Margin="584,69,0,0" VerticalAlignment="Top" Width="100" Source="Assets/calibrate.png" PointerPressed="imgCalibrateController_PointerPressed" PointerReleased="imgCalibrateController_PointerReleased" PointerCanceled="imgCalibrateController_PointerReleased" PointerCaptureLost="imgCalibrateController_PointerReleased"/>
         <Image x:Name="imgCalibrateTarget" HorizontalAlignment="Left" Height="100" Margin="583,250,0,0" VerticalAlignment="Top" Width="100" Source="Assets/calibrate.png" PointerPressed="imgCalibrateTarget_PointerPressed" PointerReleased="imgCalibrateTarget_PointerReleased" PointerCanceled="imgCalibrateTarget_PointerReleased" PointerCaptureLost="imgCalibrateTarget_PointerReleased"/>
 
